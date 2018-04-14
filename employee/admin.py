@@ -2,7 +2,7 @@ from django.contrib import admin
 
 # Register your models here.
 
-from performance.models import Department, Result, Parameter, Employee, Answer
+from employee.models import Department, Result, Parameter, Employee, Answer
 
 
 class DepartmentAdmin(admin.ModelAdmin):

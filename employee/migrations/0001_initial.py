@@ -4,7 +4,7 @@ from django.conf import settings
 from django.db import migrations, models
 import django.db.models.deletion
 import django.utils.timezone
-import performance.models
+import employee.models
 
 
 class Migration(migrations.Migration):
@@ -42,7 +42,7 @@ class Migration(migrations.Migration):
                 'db_table': 'employee',
             },
             managers=[
-                ('objects', performance.models.EmployeeManager()),
+                ('objects', employee.models.EmployeeManager()),
             ],
         ),
         migrations.CreateModel(
@@ -78,7 +78,7 @@ class Migration(migrations.Migration):
                 ('modified', models.DateTimeField(auto_now=True)),
                 ('question', models.CharField(max_length=100)),
                 ('department',
-                 models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='performance.Department')),
+                 models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='employee.Department')),
             ],
             options={
                 'db_table': 'parameter',
@@ -91,7 +91,7 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=70)),
                 ('created', models.DateTimeField(auto_now_add=True)),
                 ('modified', models.DateTimeField(auto_now=True)),
-                ('answers', models.ManyToManyField(to='performance.Answer')),
+                ('answers', models.ManyToManyField(to='employee.Answer')),
                 ('employee',
                  models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
@@ -102,13 +102,13 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='answer',
             name='question',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='performance.Parameter'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='employee.Parameter'),
         ),
         migrations.AddField(
             model_name='employee',
             name='department',
             field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE,
-                                    to='performance.Department'),
+                                    to='employee.Department'),
         ),
         migrations.AddField(
             model_name='employee',

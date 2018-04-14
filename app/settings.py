@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'performance'
+    'employee'
 ]
 
 MIDDLEWARE = [
@@ -116,7 +116,7 @@ USE_L10N = True
 USE_TZ = True
 
 # Change basic Auth user model
-AUTH_USER_MODEL = 'performance.Employee'
+AUTH_USER_MODEL = 'employee.Employee'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/

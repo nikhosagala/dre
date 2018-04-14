@@ -4,3 +4,6 @@
 
 # Virtualenv
 .venv
+
+# Python things
+__pycache__

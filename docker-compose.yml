@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=P@55w0rd123
+      - POSTGRES_USER=dremployee
+      - POSTGRES_DB=dremployee
+    ports:
+      - 5432:5432

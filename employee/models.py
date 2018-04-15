@@ -51,20 +51,23 @@ class EmployeeManager(UserManager):
         return user
 
     def create_user(self, email=None, password=None, **extra_fields):
-        extra_fields.setdefault('is_staff', False)
+        extra_fields.setdefault('is_admin', False)
         extra_fields.setdefault('is_superuser', False)
         return self._create_user(email, password, **extra_fields)
 
     def create_superuser(self, email, password, **extra_fields):
-        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_admin', True)
         extra_fields.setdefault('is_superuser', True)
 
-        if extra_fields.get('is_staff') is not True:
-            raise ValueError('Superuser must have is_staff=True.')
+        if extra_fields.get('is_admin') is not True:
+            raise ValueError('Superuser must have is_admin=True.')
         if extra_fields.get('is_superuser') is not True:
             raise ValueError('Superuser must have is_superuser=True.')
 
         return self._create_user(email, password, **extra_fields)
+
+    def _supervisor(self):
+        return self.supervisor.first_name
 
 
 class Employee(AbstractUser):
@@ -91,6 +94,9 @@ class Employee(AbstractUser):
     territory = models.ForeignKey(Territory, on_delete=models.CASCADE, blank=True, null=True)
 
     objects = EmployeeManager()
+
+    def __str__(self):
+        return self.first_name + ' ' + self.last_name
 
     class Meta:
         db_table = 'employee'

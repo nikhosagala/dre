@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Dashboard
+{% endblock %}
+
+{% block heading %}
+    Dashboard
+{% endblock %}
+
+{% block content %}
+    <div class="collection with-header" data-bind="foreach: EmployeeViewModel.models.employees()">
+        <a href="#" class="collection-item" data-bind="text: full_name"></a>
+    </div>
+{% endblock %}
+
+{% block app_js %}
+    <script>{% include 'employee/dashboard.js' %}</script>
+{% endblock %}

@@ -11,8 +11,11 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
-from .helpers import get_env
+
+from app.helpers import get_env, EnvConfig
 import django_heroku
+
+_env = EnvConfig()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -24,7 +27,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'vro%-ugbw&chen(h!$ixp#jkv!r-#0kj+zz9skw+bprwmwbg+t'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = get_env('DEBUG', True)
+DEBUG = _env.boolean('DEBUG', True)
 
 ALLOWED_HOSTS = [
     'localhost',
@@ -79,11 +82,11 @@ WSGI_APPLICATION = 'app.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': get_env('DB_NAME', 'dremployee'),
-        'USER': get_env('DB_USER', 'dremployee'),
-        'PASSWORD': get_env('DB_PASS', 'P@55w0rd123'),
-        'PORT': get_env('DB_PORT', '5432'),
-        'HOST': get_env('DB_HOST', 'localhost')
+        'NAME': _env.string('DB_NAME', 'dremployee'),
+        'USER': _env.string('DB_USER', 'dremployee'),
+        'PASSWORD': _env.string('DB_PASS', 'P@55w0rd123'),
+        'PORT': _env.string('DB_PORT', '5432'),
+        'HOST': _env.string('DB_HOST', 'localhost')
     }
 }
 

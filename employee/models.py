@@ -29,6 +29,15 @@ class Department(BaseModel):
         db_table = 'department'
 
 
+class Territory(BaseModel):
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        db_table = 'territory'
+        verbose_name_plural = 'territories'
+
+
 class EmployeeManager(UserManager):
     use_in_migrations = True
 
@@ -79,6 +88,8 @@ class Employee(AbstractUser):
 
     department = models.ForeignKey(Department, on_delete=models.CASCADE, blank=True, null=True)
 
+    territory = models.ForeignKey(Territory, on_delete=models.CASCADE, blank=True, null=True)
+
     objects = EmployeeManager()
 
     class Meta:
@@ -110,6 +121,7 @@ class Answer(TimestampedModel):
 class Result(BaseModel):
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
     answers = models.ManyToManyField(Answer)
+    period = models.CharField(max_length=100, default='')
 
     def __str__(self):
         return self.name

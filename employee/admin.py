@@ -2,7 +2,7 @@ from django.contrib import admin
 
 # Register your models here.
 
-from employee.models import Department, Result, Parameter, Employee, Answer
+from employee.models import Department, Result, Parameter, Employee, Answer, Territory
 
 
 class DepartmentAdmin(admin.ModelAdmin):
@@ -12,7 +12,7 @@ class DepartmentAdmin(admin.ModelAdmin):
 class EmployeeAdmin(admin.ModelAdmin):
     raw_id_fields = ('department',)
     list_display = ('email', 'department', 'supervisor')
-    fields = ('first_name', 'last_name', 'email', 'username', 'password', 'nik', 'supervisor')
+    fields = ('first_name', 'last_name', 'email', 'username', 'password', 'nik', 'supervisor', 'territory')
 
 
 class ParameterAdmin(admin.ModelAdmin):
@@ -41,4 +41,7 @@ admin.site.register(Employee, EmployeeAdmin)
 admin.site.register(Parameter, ParameterAdmin)
 
 admin.site.register(Answer)
+
+admin.site.register(Territory)
+
 admin.site.register(Result, ResultAdmin)

@@ -1,7 +1,6 @@
-var EmployeeViewModel = {
+let EmployeeViewModel = {
     data: {},
     models: {
-        message: ko.observable(null),
         employees: ko.observableArray([]),
     },
     methods: {},
@@ -15,7 +14,6 @@ var EmployeeViewModel = {
 };
 
 ko.computed(function () {
-    EmployeeViewModel.models.message('Heloooo');
     EmployeeViewModel.services.all();
 });
 

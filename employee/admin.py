@@ -58,7 +58,6 @@ class EmployeeAdmin(UserAdmin):
     list_display = ('email', 'first_name', 'nik', 'department', 'supervisor')
     fieldsets = (
         (None, {'fields': ('email', 'password',)}),
-
         ('Company info', {'fields': ('nik', 'department', 'supervisor', 'territory')}),
         ('Personal info', {'fields': ('first_name', 'last_name')}),
         ('Permissions', {'fields': ('is_staff', 'is_superuser')}),

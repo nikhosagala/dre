@@ -10,5 +10,6 @@ def employee_list(request):
     employees = Employee.objects.filter(supervisor=user).all()
     return JsonResponse([{
         'full_name': employee.first_name + ' ' + employee.last_name,
-        'nik': employee.nik
+        'nik': employee.nik,
+        'email': employee.email
     } for employee in employees], safe=False)

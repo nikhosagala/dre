@@ -1,11 +1,17 @@
-from django.contrib.admin.views.decorators import staff_member_required
+import http
+import json
+
+from django.db import transaction
 from django.http import JsonResponse
 from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
 
-from employee.models import Employee, Parameter
+from employee.helpers import assestment, get_result_by_employee
+from employee.models import Employee, Parameter, Answer, Result
+from employee.validators import ValidatorResultAdd
 
 
-@staff_member_required
+@csrf_exempt
 def employee_list(request):
     user = request.user
     employees = Employee.objects.filter(supervisor=user).all()
@@ -16,15 +22,66 @@ def employee_list(request):
         'evaluation': {
             'link': reverse('employee:employee-evaluation', kwargs={'employee_id': employee.id})
         }
-    } for employee in employees], safe=False)
+    } for employee in employees], safe=False, status=http.HTTPStatus.OK)
 
 
-@staff_member_required()
+@csrf_exempt
 def employee_evaluation(request, employee_id):
     if request.method == 'GET':
         employee = Employee.objects.get(pk=employee_id)
         questions = Parameter.objects.filter(department=employee.department).all()
         return JsonResponse([{
+            'id': question.id,
             'question': question.question,
             'weight': question.weight
-        } for question in questions], safe=False)
+        } for question in questions], safe=False, status=http.HTTPStatus.OK)
+    if request.method == 'POST':
+        employee = Employee.objects.get(pk=employee_id)
+        body = json.loads(request.body.decode('utf-8'))
+
+        validate = ValidatorResultAdd(body)
+        if validate.is_valid():
+            try:
+                with transaction.atomic():
+                    answers = body.get('answers')
+                    period = validate.cleaned_data['period']
+
+                    result = Result.objects.create(employee=employee, period=period)
+
+                    for answer in answers:
+                        question = Parameter.objects.get(pk=answer.get('question').get('id'))
+                        created_answer = Answer.objects.create(question=question, value=answer.get('value'))
+                        result.answers.add(created_answer)
+
+                    assestment(result)
+
+                    return JsonResponse({
+                        'message': 'Ok'
+                    }, status=http.HTTPStatus.CREATED)
+            except Exception as e:
+                return JsonResponse({
+                    'message': 'Internal server error',
+                }, status=http.HTTPStatus.INTERNAL_SERVER_ERROR)
+
+        return JsonResponse({
+            'message': 'Your data is invalid.'
+        }, status=http.HTTPStatus.BAD_REQUEST)
+
+
+@csrf_exempt
+def employee_evaluation_result(request):
+    user = request.user
+    employees = Employee.objects.filter(supervisor=user).all()
+    results = []
+    for employee in employees:
+        for result in get_result_by_employee(employee):
+            results.append(result)
+    return JsonResponse([{
+        'full_name': result.employee.first_name + ' ' + result.employee.last_name,
+        'nik': result.employee.nik,
+        'result': result.result,
+        'period': result.period,
+        'evaluation': {
+            'link': reverse('employee:employee-evaluation', kwargs={'employee_id': employee.id})
+        }
+    } for result in results], safe=False, status=http.HTTPStatus.OK)

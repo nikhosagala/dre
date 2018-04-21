@@ -11,7 +11,7 @@
 {% block content %}
     <div class="section">
         <div class="input-field col s6">
-            <input placeholder="Periode" id="periode" type="text" class="validate">
+            <input placeholder="Periode" id="period" type="text" class="validate">
             <label for="periode">Periode</label>
         </div>
     </div>
@@ -31,7 +31,8 @@
                 <td data-bind="text: weight"></td>
                 <td>
                     <div class="col s6">
-                        <input style="border-bottom: none!important;" placeholder="Nilai"
+                        <input data-bind="value: EmployeeViewModel.models.values()[$index()]" ,
+                               style="border-bottom: none!important;" placeholder="Nilai"
                                type="number" class="validate">
                     </div>
                 </td>

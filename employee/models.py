@@ -106,6 +106,7 @@ class Parameter(BaseModel):
     question = models.CharField(max_length=100)
     department = models.ForeignKey(Department, on_delete=models.CASCADE, related_name='departments')
     weight = models.DecimalField(default=0, decimal_places=2, max_digits=12)
+    standard = models.IntegerField(default=0)
 
     def __str__(self):
         return self.question

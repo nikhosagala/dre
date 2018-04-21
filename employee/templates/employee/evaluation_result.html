@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Evaluation Result
+{% endblock %}
+
+{% block heading %}
+    Evaluation Result
+{% endblock %}
+
+
+{% block content %}
+    <div class="section">
+        <table class="striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Nama</th>
+                <th>NIK</th>
+                <th>Hasil</th>
+                <th>Periode</th>
+            </tr>
+            <tbody data-bind="foreach: ResultViewModel.models.results()">
+            <tr>
+                <td data-bind="text: $index()+1"></td>
+                <td data-bind="text: full_name"></td>
+                <td data-bind="text: nik"></td>
+                <td data-bind="text: result"></td>
+                <td data-bind="text: period"></td>
+            </tr>
+            </tbody>
+            </thead>
+        </table>
+    </div>
+{% endblock %}
+
+
+{% block app_js %}
+    <script>{% include 'employee/evaluation_result.js' %}</script>
+{% endblock %}

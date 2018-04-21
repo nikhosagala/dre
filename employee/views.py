@@ -23,3 +23,7 @@ def evaluation(request, employee_id):
                   {'employee': employee,
                    'evaluation_url': evaluation_url
                    })
+
+
+def evaluation_result(request):
+    return render(request, 'employee/evaluation_result.html')

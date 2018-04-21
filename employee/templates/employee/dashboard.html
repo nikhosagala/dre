@@ -12,12 +12,14 @@
     <table class="striped">
         <thead>
         <tr>
+            <th>#</th>
             <th>Nama</th>
             <th>NIK</th>
             <th>Action</th>
         </tr>
         <tbody data-bind="foreach: EmployeeViewModel.models.employees()">
         <tr>
+            <td data-bind="text: $index()+1"></td>
             <td data-bind="text: full_name"></td>
             <td data-bind="text: nik"></td>
             <td><a class="waves-effect waves-light btn-small"

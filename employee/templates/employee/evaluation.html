@@ -19,18 +19,19 @@
         <table class="striped">
             <thead>
             <tr>
+                <th>#</th>
                 <th>Pertanyaan</th>
                 <th>Bobot</th>
                 <th>Nilai</th>
             </tr>
             <tbody data-bind="foreach: EmployeeViewModel.models.questions()">
             <tr>
+                <td data-bind="text: $index()+1"></td>
                 <td data-bind="text: question"></td>
                 <td data-bind="text: weight"></td>
                 <td>
                     <div class="col s6">
                         <input style="border-bottom: none!important;" placeholder="Nilai"
-                               id="value"
                                type="number" class="validate">
                     </div>
                 </td>
@@ -41,7 +42,7 @@
     </div>
     <div class="section">
         <div class="section col s4 offset-s8">
-            <a class="waves-effect waves-light btn">Submit</a>
+            <a class="waves-effect waves-light btn" data-bind="click: EmployeeViewModel.methods.onClickButtonSubmit">Submit</a>
         </div>
     </div>
 {% endblock %}

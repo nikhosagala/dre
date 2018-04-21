@@ -51,15 +51,15 @@ class EmployeeManager(UserManager):
         return user
 
     def create_user(self, email=None, password=None, **extra_fields):
-        extra_fields.setdefault('is_admin', False)
+        extra_fields.setdefault('is_staff', False)
         extra_fields.setdefault('is_superuser', False)
         return self._create_user(email, password, **extra_fields)
 
     def create_superuser(self, email, password, **extra_fields):
-        extra_fields.setdefault('is_admin', True)
+        extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
 
-        if extra_fields.get('is_admin') is not True:
+        if extra_fields.get('is_staff') is not True:
             raise ValueError('Superuser must have is_admin=True.')
         if extra_fields.get('is_superuser') is not True:
             raise ValueError('Superuser must have is_superuser=True.')
@@ -104,7 +104,8 @@ class Employee(AbstractUser):
 
 class Parameter(BaseModel):
     question = models.CharField(max_length=100)
-    department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE, related_name='departments')
+    weight = models.IntegerField(default=0)
 
     def __str__(self):
         return self.question
@@ -114,7 +115,7 @@ class Parameter(BaseModel):
 
 
 class Answer(TimestampedModel):
-    question = models.ForeignKey(Parameter, on_delete=models.CASCADE)
+    question = models.ForeignKey(Parameter, on_delete=models.CASCADE, related_name='parameters')
     value = models.IntegerField()
 
     def __str__(self):
@@ -125,9 +126,18 @@ class Answer(TimestampedModel):
 
 
 class Result(BaseModel):
+    PRODUCTIVE = 'productive'
+    NOT_PRODUCTIVE = 'not-productive'
+
+    STATUS = (
+        (PRODUCTIVE, 'Produktif'),
+        (NOT_PRODUCTIVE, 'Tidak Produktif')
+    )
+
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
     answers = models.ManyToManyField(Answer)
     period = models.CharField(max_length=100, default='')
+    result = models.CharField(max_length=100, choices=STATUS, default=NOT_PRODUCTIVE)
 
     def __str__(self):
         return self.name

@@ -9,8 +9,23 @@
 {% endblock %}
 
 {% block content %}
-    <div class="collection with-header" data-bind="foreach: EmployeeViewModel.models.employees()">
-        <a href="#" class="collection-item" data-bind="text: full_name"></a>
+    <table class="striped">
+        <thead>
+        <tr>
+            <th>Nama</th>
+            <th>NIK</th>
+            <th>Action</th>
+        </tr>
+        <tbody data-bind="foreach: EmployeeViewModel.models.employees()">
+        <tr>
+            <td data-bind="text: full_name"></td>
+            <td data-bind="text: nik"></td>
+            <td><a class="waves-effect waves-light btn-small"
+                   data-bind="click: EmployeeViewModel.methods.onClickButtonEvaluation">Nilai</a></td>
+        </tr>
+        </tbody>
+        </thead>
+    </table>
     </div>
 {% endblock %}
 

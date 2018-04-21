@@ -79,27 +79,12 @@ class ParameterAdmin(admin.ModelAdmin):
     )
 
 
-class ResultInline(admin.StackedInline):
-    model = Result.answers.through
-    extra = 0
-
-
-class ResultAdmin(admin.ModelAdmin):
-    exclude = ('answers',)
-    inlines = (ResultInline,)
-    list_display = ('name', 'employee', 'created')
-
-
 admin.site.register(Department, DepartmentAdmin)
 
 admin.site.register(Employee, EmployeeAdmin)
 
 admin.site.register(Parameter, ParameterAdmin)
 
-admin.site.register(Answer)
-
 admin.site.register(Territory)
-
-admin.site.register(Result, ResultAdmin)
 
 admin.site.unregister(Group)

@@ -3,7 +3,11 @@ let EmployeeViewModel = {
     models: {
         employees: ko.observableArray([]),
     },
-    methods: {},
+    methods: {
+        onClickButtonEvaluation: (data) => {
+            window.location.href = data.evaluation.link;
+        }
+    },
     services: {
         all: function () {
             axios.get("{% url 'employee:ajax-employee-list' %}").then(function (response) {

@@ -33,7 +33,8 @@ def employee_evaluation(request, employee_id):
         return JsonResponse([{
             'id': question.id,
             'question': question.question,
-            'weight': question.weight
+            'weight': question.weight,
+            'standard': question.standard
         } for question in questions], safe=False, status=http.HTTPStatus.OK)
     if request.method == 'POST':
         employee = Employee.objects.get(pk=employee_id)

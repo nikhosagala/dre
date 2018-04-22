@@ -23,6 +23,28 @@ def assestment_productivity(result: Result):
     result.save()
 
 
+def assestment_promotion(result: Result):
+    supervisor = result.employee.supervisor
+    total_assestment = 0
+    for question in get_all_available_question(supervisor.department):
+        assestment_per_question = []
+        for result_employee in get_result_by_supervisor(supervisor, result.period):
+            for answer in result_employee.answers.filter(question=question):
+                assestment_per_question.append(validation(answer.value, answer.question.standard))
+        normalization = max(assestment_per_question)
+        criteria = 0
+        answer = result.answers.filter(question=question).first()
+        if normalization > 0:
+            criteria = float(answer.value / normalization)
+        weight = float(answer.question.weight) / 100
+        total_assestment += (criteria * weight)
+    if total_assestment > 0.845:
+        result.result = Result.PROMOTED
+    else:
+        result.result = Result.NOT_PROMOTED
+    result.save()
+
+
 def validation(value, weight):
     if value >= weight:
         return 1

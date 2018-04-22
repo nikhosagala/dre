@@ -23,12 +23,14 @@
                 <th>Pertanyaan</th>
                 <th>Bobot</th>
                 <th>Nilai</th>
+                <th>Standard</th>
             </tr>
             <tbody data-bind="foreach: EmployeeViewModel.models.questions()">
             <tr>
                 <td data-bind="text: $index()+1"></td>
                 <td data-bind="text: question"></td>
                 <td data-bind="text: weight"></td>
+                <td data-bind="text: standard"></td>
                 <td>
                     <div class="col s6">
                         <input data-bind="value: EmployeeViewModel.models.values()[$index()]" ,

@@ -75,7 +75,9 @@ class ParameterAdmin(admin.ModelAdmin):
     list_display = (
         'name',
         'question',
-        'department'
+        'department',
+        'standard',
+        'weight'
     )
 
 

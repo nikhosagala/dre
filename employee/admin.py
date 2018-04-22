@@ -1,12 +1,11 @@
 from django import forms
 from django.contrib import admin
-
 # Register your models here.
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.contrib.auth.models import Group
 
-from employee.models import Department, Result, Parameter, Employee, Answer, Territory
+from employee.models import Department, Result, Parameter, Employee, Territory
 
 
 class DepartmentAdmin(admin.ModelAdmin):
@@ -81,6 +80,10 @@ class ParameterAdmin(admin.ModelAdmin):
     )
 
 
+class ResultAdmin(admin.ModelAdmin):
+    list_display = ('employee', 'period', 'result')
+
+
 admin.site.register(Department, DepartmentAdmin)
 
 admin.site.register(Employee, EmployeeAdmin)
@@ -88,5 +91,7 @@ admin.site.register(Employee, EmployeeAdmin)
 admin.site.register(Parameter, ParameterAdmin)
 
 admin.site.register(Territory)
+
+admin.site.register(Result, ResultAdmin)
 
 admin.site.unregister(Group)

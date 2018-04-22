@@ -30,7 +30,7 @@ def assestment_promotion(result: Result):
         assestment_per_question = []
         for result_employee in get_result_by_supervisor(supervisor, result.period):
             for answer in result_employee.answers.filter(question=question):
-                assestment_per_question.append(validation(answer.value, answer.question.standard))
+                assestment_per_question.append(answer.value)
         normalization = max(assestment_per_question)
         criteria = 0
         answer = result.answers.filter(question=question).first()

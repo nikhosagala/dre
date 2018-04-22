@@ -13,10 +13,15 @@ def dashboard(request):
 
 
 @staff_member_required(login_url=reverse_lazy('admin:login'))
+def home(request):
+    return render(request, 'employee/home.html')
+
+
+@staff_member_required(login_url=reverse_lazy('admin:login'))
 def evaluation(request, employee_id):
     try:
         employee = Employee.objects.get(pk=employee_id)
-        evaluation_url = reverse('employee:ajax-question-list', kwargs={'employee_id': employee.id})
+        evaluation_url = reverse('employee:ajax-evaluation-list', kwargs={'employee_id': employee.id})
     except Employee.DoesNotExist:
         raise Http404('Employee does not exist')
     return render(request, 'employee/evaluation.html',
@@ -27,3 +32,16 @@ def evaluation(request, employee_id):
 
 def evaluation_result(request):
     return render(request, 'employee/evaluation_result.html')
+
+
+@staff_member_required(login_url=reverse_lazy('admin:login'))
+def promotion(request, employee_id):
+    try:
+        employee = Employee.objects.get(pk=employee_id)
+        evaluation_url = reverse('employee:ajax-promotion-list', kwargs={'employee_id': employee.id})
+    except Employee.DoesNotExist:
+        raise Http404('Employee does not exist')
+    return render(request, 'employee/promotion.html',
+                  {'employee': employee,
+                   'evaluation_url': evaluation_url
+                   })

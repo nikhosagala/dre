@@ -5,7 +5,7 @@ let EmployeeViewModel = {
     },
     methods: {
         onClickButtonEvaluation: (data) => {
-            window.location.href = data.evaluation.link;
+            window.location.href = data.assestment.link;
         }
     },
     services: {

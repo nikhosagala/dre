@@ -19,7 +19,7 @@ let EmployeeViewModel = {
     },
     services: {
         get: () => {
-            axios.get("{{ evaluation_url }}").then(
+            axios.get("{{ promotion_url }}").then(
                 (response) => EmployeeViewModel.models.questions(response.data)
             ).then(() => {
                 EmployeeViewModel.models.questions().forEach((value) => {
@@ -32,7 +32,7 @@ let EmployeeViewModel = {
             });
         },
         add: (data) => {
-            axios.post("{{ evaluation_url}}", ko.toJSON(data)).then(() => window.location.href = "{% url 'employee:evaluation-result' %}");
+            axios.post("{{ promotion_url}}", ko.toJSON(data)).then(() => window.location.href = "{% url 'employee:result' %}");
         }
     }
 };

@@ -1,42 +1,24 @@
 let EmployeeViewModel = {
     data: {},
     models: {
-        questions: ko.observableArray([]),
-        answers: ko.observableArray([]),
-        values: ko.observableArray([]),
+        employees: ko.observableArray([]),
     },
     methods: {
-        onClickButtonSubmit: (data, event) => {
-            EmployeeViewModel.models.values().forEach((value, index) => {
-                EmployeeViewModel.models.answers()[index].value = value;
-            });
-            let submit = {
-                period: $('#period').val(),
-                answers: EmployeeViewModel.models.answers(),
-            };
-            EmployeeViewModel.services.add(submit);
+        onClickButtonEvaluation: (data) => {
+            window.location.href = data.promotion.link;
         }
     },
     services: {
-        get: () => {
-            axios.get("{{ evaluation_url }}").then(
-                (response) => EmployeeViewModel.models.questions(response.data)
-            ).then(() => {
-                EmployeeViewModel.models.questions().forEach((value) => {
-                    let answer = {
-                        question: value,
-                        value: 0
-                    };
-                    EmployeeViewModel.models.answers.push(answer);
-                })
-            });
-        },
-        add: (data) => {
-            axios.post("{{ evaluation_url}}", ko.toJSON(data)).then(() => window.location.href = "{% url 'employee:evaluation-result' %}");
+        all: function () {
+            axios.get("{% url 'employee:ajax-employee-list' %}").then(function (response) {
+                EmployeeViewModel.models.employees(response.data);
+            })
         }
     }
 };
 
-ko.computed(() => EmployeeViewModel.services.get());
+ko.computed(function () {
+    EmployeeViewModel.services.all();
+});
 
 ko.applyBindings([EmployeeViewModel]);

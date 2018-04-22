@@ -20,17 +20,17 @@ def employee_list(request):
         'full_name': employee.first_name + ' ' + employee.last_name,
         'nik': employee.nik,
         'email': employee.email,
-        'evaluation': {
-            'link': reverse('employee:employee-evaluation', kwargs={'employee_id': employee.id})
+        'assestment': {
+            'link': reverse('employee:assestment-detail', kwargs={'employee_id': employee.id})
         },
         'promotion': {
-            'link': reverse('employee:employee-promotion', kwargs={'employee_id': employee.id})
+            'link': reverse('employee:promotion-detail', kwargs={'employee_id': employee.id})
         }
     } for employee in employees], safe=False, status=http.HTTPStatus.OK)
 
 
 @csrf_exempt
-def employee_evaluation(request, employee_id):
+def employee_assestment(request, employee_id):
     if request.method == 'GET':
         employee = Employee.objects.get(pk=employee_id)
         questions = Parameter.objects.filter(department=employee.department).all()
@@ -74,7 +74,7 @@ def employee_evaluation(request, employee_id):
 
 
 @csrf_exempt
-def employee_evaluation_result(request):
+def result(request):
     user = request.user
     if user.is_superuser:
         results = get_result_by_supervisor(user)

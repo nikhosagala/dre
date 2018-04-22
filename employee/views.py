@@ -8,40 +8,46 @@ from employee.models import Employee
 
 
 @staff_member_required(login_url=reverse_lazy('admin:login'))
-def dashboard(request):
-    return render(request, 'employee/dashboard.html')
+def homepage(request):
+    return render(request, 'employee/homepage.html')
 
 
 @staff_member_required(login_url=reverse_lazy('admin:login'))
-def home(request):
-    return render(request, 'employee/home.html')
+def assestment(request):
+    return render(request, 'employee/assestment.html')
 
 
 @staff_member_required(login_url=reverse_lazy('admin:login'))
-def evaluation(request, employee_id):
+def promotion(request):
+    return render(request, 'employee/promotion.html')
+
+
+@staff_member_required(login_url=reverse_lazy('admin:login'))
+def assestment_detail(request, employee_id):
     try:
         employee = Employee.objects.get(pk=employee_id)
-        evaluation_url = reverse('employee:ajax-evaluation-list', kwargs={'employee_id': employee.id})
+        assestment_url = reverse('employee:ajax-assestment-detail', kwargs={'employee_id': employee.id})
     except Employee.DoesNotExist:
         raise Http404('Employee does not exist')
-    return render(request, 'employee/evaluation.html',
+    return render(request, 'employee/assestment-detail.html',
                   {'employee': employee,
-                   'evaluation_url': evaluation_url
+                   'assestment_url': assestment_url
                    })
 
 
-def evaluation_result(request):
-    return render(request, 'employee/evaluation_result.html')
+@staff_member_required(login_url=reverse_lazy('admin:login'))
+def result(request):
+    return render(request, 'employee/result.html')
 
 
 @staff_member_required(login_url=reverse_lazy('admin:login'))
-def promotion(request, employee_id):
+def promotion_detail(request, employee_id):
     try:
         employee = Employee.objects.get(pk=employee_id)
-        evaluation_url = reverse('employee:ajax-promotion-list', kwargs={'employee_id': employee.id})
+        promotion_url = reverse('employee:ajax-promotion-detail', kwargs={'employee_id': employee.id})
     except Employee.DoesNotExist:
         raise Http404('Employee does not exist')
-    return render(request, 'employee/promotion.html',
+    return render(request, 'employee/promotion-detail.html',
                   {'employee': employee,
-                   'evaluation_url': evaluation_url
+                   'promotion_url': promotion_url
                    })

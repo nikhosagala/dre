@@ -6,7 +6,7 @@ from django.http import JsonResponse
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 
-from employee.helpers import assestment, get_result_by_employee
+from employee.helpers import assestment_productivity, get_result_by_supervisor
 from employee.models import Employee, Parameter, Answer, Result
 from employee.validators import ValidatorResultAdd
 
@@ -53,7 +53,7 @@ def employee_evaluation(request, employee_id):
                         created_answer = Answer.objects.create(question=question, value=answer.get('value'))
                         result.answers.add(created_answer)
 
-                    assestment(result)
+                    assestment_productivity(result)
 
                     return JsonResponse({
                         'message': 'Ok'
@@ -71,17 +71,10 @@ def employee_evaluation(request, employee_id):
 @csrf_exempt
 def employee_evaluation_result(request):
     user = request.user
-    employees = Employee.objects.filter(supervisor=user).all()
-    results = []
-    for employee in employees:
-        for result in get_result_by_employee(employee):
-            results.append(result)
+    results = get_result_by_supervisor(user)
     return JsonResponse([{
         'full_name': result.employee.first_name + ' ' + result.employee.last_name,
         'nik': result.employee.nik,
         'result': result.result,
         'period': result.period,
-        'evaluation': {
-            'link': reverse('employee:employee-evaluation', kwargs={'employee_id': employee.id})
-        }
     } for result in results], safe=False, status=http.HTTPStatus.OK)

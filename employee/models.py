@@ -127,18 +127,24 @@ class Answer(TimestampedModel):
 
 
 class Result(BaseModel):
+    DEFAULT = 'not-assestment'
     PRODUCTIVE = 'productive'
     NOT_PRODUCTIVE = 'not-productive'
+    PROMOTED = 'promoted'
+    NOT_PROMOTED = 'not-promoted'
 
     STATUS = (
+        (DEFAULT, 'Belum Dinilai'),
         (PRODUCTIVE, 'Produktif'),
-        (NOT_PRODUCTIVE, 'Tidak Produktif')
+        (NOT_PRODUCTIVE, 'Tidak Produktif'),
+        (PROMOTED, 'Promosi'),
+        (NOT_PROMOTED, 'Tidak Promosi')
     )
 
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
     answers = models.ManyToManyField(Answer)
     period = models.CharField(max_length=100, default='')
-    result = models.CharField(max_length=100, choices=STATUS, default=NOT_PRODUCTIVE)
+    result = models.CharField(max_length=100, choices=STATUS, default=DEFAULT)
 
     def __str__(self):
         return self.name

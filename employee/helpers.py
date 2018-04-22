@@ -60,6 +60,14 @@ def get_result_by_supervisor(supevisor: Employee, period=None):
     return results
 
 
+def get_result_by_employee(employee: Employee, period=None):
+    if period:
+        results = Result.objects.filter(employee=employee, period__icontains=period)
+    else:
+        results = Result.objects.filter(employee=employee)
+    return results
+
+
 def get_all_available_question(department: Department):
     results = Parameter.objects.filter(department=department)
     return results

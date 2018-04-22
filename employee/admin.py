@@ -82,6 +82,7 @@ class ParameterAdmin(admin.ModelAdmin):
 
 class ResultAdmin(admin.ModelAdmin):
     list_display = ('employee', 'period', 'result')
+    search_fields = ('employee__first_name', 'period')
 
 
 admin.site.register(Department, DepartmentAdmin)

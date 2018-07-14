@@ -1,8 +1,9 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+    <link rel="stylesheet" href="{% static 'css/materialize.min.css' %}">
     {% block vendors_css %}{% endblock %}
     {% block app_css %}{% endblock %}
     <title>{% block title %}{% endblock %}</title>
@@ -23,12 +24,11 @@
     </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
-{#<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>#}
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/materialize.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/knockout-min.js' %}"></script>
+<script src="{% static 'js/axios.min.js' %}"></script>
 {% block vendors_js %}{% endblock %}
 
 {% block app_js %}{% endblock %}

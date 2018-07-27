@@ -75,7 +75,7 @@ class Employee(AbstractUser):
     email = models.EmailField(_('email address'), unique=True)
     username = models.CharField(_('username'), unique=False,
                                 blank=True, max_length=150, null=True)
-    nik = models.CharField(max_length=10, blank=True, default='')
+    nik = models.CharField(max_length=10, blank=True, default='', unique=True)
     is_guest = models.BooleanField(default=False)
     REQUIRED_FIELDS = []
     first_name = models.CharField(_('first name'), max_length=150, blank=True)

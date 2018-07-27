@@ -128,15 +128,11 @@ class Answer(TimestampedModel):
 
 class Result(BaseModel):
     DEFAULT = 'not-assestment'
-    PRODUCTIVE = 'productive'
-    NOT_PRODUCTIVE = 'not-productive'
     PROMOTED = 'promoted'
     NOT_PROMOTED = 'not-promoted'
 
     STATUS = (
         (DEFAULT, 'Belum Dinilai'),
-        (PRODUCTIVE, 'Produktif'),
-        (NOT_PRODUCTIVE, 'Tidak Produktif'),
         (PROMOTED, 'Promosi'),
         (NOT_PROMOTED, 'Tidak Promosi')
     )

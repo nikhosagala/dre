@@ -3,6 +3,7 @@ version: '3'
 services:
   db:
     image: postgres
+    container_name: dre_dbms
     environment:
       - POSTGRES_PASSWORD=P@55w0rd123
       - POSTGRES_USER=dremployee

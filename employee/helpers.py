@@ -1,4 +1,4 @@
-from employee.models import Result, Employee, Answer, Department, Parameter
+from employee.models import Result, Employee, Department, Parameter
 
 
 def assestment_productivity(result: Result):
@@ -38,7 +38,7 @@ def assestment_promotion(result: Result):
             criteria = float(answer.value / normalization)
         weight = float(answer.question.weight) / 100
         total_assestment += (criteria * weight)
-    if total_assestment > 0.845:
+    if total_assestment > 0.61:
         result.result = Result.PROMOTED
     else:
         result.result = Result.NOT_PROMOTED

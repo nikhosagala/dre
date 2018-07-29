@@ -51,7 +51,7 @@ def employee_assestment(request, employee_id):
                     answers = body.get('answers')
                     period = validate.cleaned_data['period']
 
-                    result = Result.objects.create(employee=employee, period=period)
+                    result, created = Result.objects.get_or_create(employee=employee, period=period)
 
                     for answer in answers:
                         question = Parameter.objects.get(pk=answer.get('question').get('id'))

@@ -151,3 +151,4 @@ class Result(BaseModel):
 
     class Meta:
         db_table = 'result'
+        ordering = ['-period', '-result']

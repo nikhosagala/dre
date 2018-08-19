@@ -76,6 +76,7 @@ def employee_assestment(request, employee_id):
 @csrf_exempt
 def result(request):
     user = request.user
+    results = []
     if user.is_superuser:
         results = get_result_by_supervisor(user)
     elif user.is_staff:

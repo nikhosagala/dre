@@ -1,3 +1,4 @@
+from app import settings
 from employee.models import Result, Employee, Department, Parameter
 
 
@@ -38,7 +39,8 @@ def assestment_promotion(result: Result):
             criteria = float(answer.value / normalization)
         weight = float(answer.question.weight) / 100
         total_assestment += (criteria * weight)
-    if total_assestment > 0.61:
+    standard = settings.STANDARD
+    if total_assestment > standard:
         result.result = Result.PROMOTED
     else:
         result.result = Result.NOT_PROMOTED

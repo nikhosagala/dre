@@ -12,8 +12,9 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 
-from app.helpers import get_env, EnvConfig
 import django_heroku
+
+from app.helpers import get_env, EnvConfig
 
 _env = EnvConfig()
 
@@ -134,6 +135,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+
+STANDARD = os.getenv('STANDARD', 0.61)
 
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/

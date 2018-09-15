@@ -66,6 +66,7 @@ def employee_assestment(request, employee_id):
             except Exception as e:
                 return JsonResponse({
                     'message': 'Internal server error',
+                    'error': f'{e}'
                 }, status=http.HTTPStatus.INTERNAL_SERVER_ERROR)
 
         return JsonResponse({

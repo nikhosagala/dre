@@ -39,7 +39,7 @@ def assestment_promotion(result: Result):
             criteria = float(answer.value / normalization)
         weight = float(answer.question.weight) / 100
         total_assestment += (criteria * weight)
-    standard = settings.STANDARD
+    standard = float(settings.STANDARD)
     if total_assestment > standard:
         result.result = Result.PROMOTED
     else:

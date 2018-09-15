@@ -9,7 +9,7 @@ from django.views.decorators.csrf import csrf_exempt
 from employee.helpers import assestment_productivity, get_result_by_supervisor, assestment_promotion, \
     get_result_by_employee
 from employee.models import Employee, Parameter, Answer, Result
-from employee.validators import ValidatorResultAdd
+from employee.validators import ValidatorResultAdd, AnswerValidator
 
 
 @csrf_exempt
@@ -114,8 +114,11 @@ def employee_promotion(request, employee_id):
 
                     for answer in answers:
                         question = Parameter.objects.get(pk=answer.get('question').get('id'))
-                        created_answer = Answer.objects.create(question=question, value=answer.get('value'))
-                        result.answers.add(created_answer)
+                        answer_val = AnswerValidator(answer)
+                        if answer_val.is_valid():
+                            created_answer = Answer.objects.create(question=question,
+                                                                   value=answer_val.cleaned_data['value'])
+                            result.answers.add(created_answer)
 
                     assestment_promotion(result)
 

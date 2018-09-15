@@ -1,6 +1,7 @@
 import http
 import json
 
+from django.conf import settings
 from django.db import transaction
 from django.http import JsonResponse
 from django.urls import reverse
@@ -124,7 +125,8 @@ def employee_promotion(request, employee_id):
                     assestment_promotion(result)
 
                     return JsonResponse({
-                        'message': 'Ok'
+                        'message': 'Ok',
+                        'standart': settings.STANDARD
                     }, status=http.HTTPStatus.CREATED)
             except Exception as e:
                 return JsonResponse({
